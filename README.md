@@ -4,3 +4,9 @@ It will integrate a simple interactive map using templates from d3js.org. It wil
 output based on various factors such as website name or time. Plans are in place to integrate a search feature
 that would take in a website name and return information on said website (ie. Was it accessed? When? How many times?). 
 Time permitting, the program might highlight malicious or illegal searches and websites based on user input.
+
+
+Updates- 
+
+Update 10/14/16 - 
+    -Added feature to check the Google Chrome Extensions and Applications are installed
