@@ -91,7 +91,7 @@ def history_Retrieval_Module():
 
         choice = input("Type 'Go' to Begin again or type 'quit': ")
         if choice == 'go':
-            print("uhhh, figure this out Zach")
+            pass
         elif choice == 'quit':
             print("Goodbye")
             status = False
