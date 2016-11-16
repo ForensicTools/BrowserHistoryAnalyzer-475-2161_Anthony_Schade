@@ -11,6 +11,7 @@
 
 import os
 from tkinter import *
+import re
 
 
 file = open('Ext-App.txt')
@@ -42,11 +43,14 @@ for line in installed:
 
 i = 0
 
+lst4= []
+
 for s in lst:
     for item in lst2:
         if item in s:
             print(lst3[i] + " is installed")
             i += 1
+            #print(lst4[i])
 
 #
 #Working on getting bookmarks
@@ -54,16 +58,29 @@ for s in lst:
 
 bookpath = os.path.join("C:\\", "Users", "%username%" ,"AppData","Local","Google","Chrome","User Data","Default")
 bookpath2 = str("\"%s\"" %bookpath)
-bookpath3 = os.path.join("C:\\", "Users", "%username%" ,"AppData","Local","Google","Chrome","User Data","Default","")
-os.system("cd " + bookpath3 + " Bookmarks > bookmarks.txt")
+bookpath3 = os.path.join("C:\\", "Users", "%username%" ,"AppData","Local","Google","Chrome","User Data","Default","Bookmarks")
+path3 = str("\"%s\"" %bookpath3)
 
 
+##Get contents of Bookmarks file and output to text
+##file in the directory of THIS program
+os.system("type " + path3 + " > bookmarks.txt" )
 
-#for line in marks:
- #   if "http" in line:
-  #      lst5.append(line)
-#for line in lst5:
-#    print(line)
+
+##Take Bookmarks file and add contents to a list
+##
+marks = open('bookmarks.txt')
+lst5 = []
+point = 'h'
+
+
+for line in marks:
+    #line = re.sub('"url": "', '', line)
+    line = line.strip('} {"url": "')
+    re.sub('}  {', '',line)
+    if "http" in line:
+        lst5.append(line)
+
 
 
 ##
@@ -76,6 +93,7 @@ os.system("cd " + bookpath3 + " Bookmarks > bookmarks.txt")
 ##
 ##
 ##
+
 def onclick():
    pass
 def close():
@@ -83,14 +101,24 @@ def close():
 
 root = Tk()
 text = Text(root)
-text.insert(INSERT, *lst2)
+text.insert(INSERT, lst5)
 text.pack()
 root.wm_title("Bookmark Visualizer")
 
+root.iconbitmap("bookmarks-icon-24532-16x16.ico")
 root.mainloop()
 
-B1 = Button(root, text = "Hello", command = close())
-B1.place(x=35,y=50)
+#B1 = Button(root, text = "Hello", command = close())
+#B1.place(x=35,y=50)
 
 def close():
     root.destroy()
+
+#root2 = Tk()
+#text2 = Text(root2)
+#text2.insert(INSERT, lst4)
+#text2.pack()
+#root2.wm_title("Extension Analyzer")
+
+#root2.mainloop()
+
