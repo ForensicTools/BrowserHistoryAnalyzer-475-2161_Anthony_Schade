@@ -26,13 +26,15 @@ def history_Retrieval_Module():
     status = True
 
     while status == True:
+
         data_retrieval_type = str(
-            input("What type of data would you like to view? Type .help for a list of acceptable commands: ")).lower()
+            input("What type of data would you like to view or search for a website? Type .help for a list of acceptable commands: ")).lower()
         try:
             Link = sqlite3.connect(default_file_path)
-            c_cursor= Link.cursor()
-            b_cursor= Link.cursor()
-            a_cursor= Link.cursor()
+            d_cursor = Link.cursor()
+            c_cursor = Link.cursor()
+            b_cursor = Link.cursor()
+            a_cursor = Link.cursor()
         except:
             print('\n INVALID USERNAME ENTERED. User does not have History, or incorrect username')
 
@@ -81,6 +83,21 @@ def history_Retrieval_Module():
             print("Display format: Search Term")
             print("---------------------------------------------------")
 
+        elif data_retrieval_type == "search term":
+            table_name_search_term = str('search term')
+            column_name_search_term = str('search term')
+            #d.cursor = Link.cursor()
+            term = str(
+                input("What Website would you like to search for? (ex. google, facebook): ")).lower()
+            print("---------------------------------------------------")
+            for row in d_cursor.execute('select url,  from urls where url like "%'+term+'%"'.\
+                                        format(tn=table_name_search_term, cn=column_name_search_term)):
+                print(row)
+
+            for row in d_cursor.execute('select COUNT(url) from urls where url like "%'+term+'%"'):
+                print(term +' Has been accessed - times since the creation of the History log:')
+                print(row)
+
         else:
             print('\n INVALID DATA TYPE')
             print('\n List of commands: \n'
@@ -89,7 +106,8 @@ def history_Retrieval_Module():
                   ' View Recent Searches: Searches \n'
                   ' Repeat This List: .help')
 
-        choice = input("Type 'Go' to Begin again or type 'quit': ")
+
+        choice = input("Type 'Go' to begin again or type 'quit': ")
         if choice == 'go':
             pass
         elif choice == 'quit':
